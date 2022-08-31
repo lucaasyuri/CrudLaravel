@@ -1,0 +1,569 @@
+- composer: Gerenciador de dependências para PHP
+
+===============================================================================================================
+
+					***Instalando o Laravel***
+
+vá até a pasta do projeto > digitar 'cmd' na barra de diretório > colar o comando: 
+composer create-project laravel/laravel"nome do projeto"
+
+===============================================================================================================
+
+					***Instalando o Laravel***
+
+- acessar o terminal do VS code > acessar a pasta desejada onde vai estar o projeto e esecutar o comando
+	- composer create-project --prefer-dist laravel/laravel "nome do projeto"
+
+===============================================================================================================
+
+					***Instalando o Laravel***
+
+*****Instalar laravel com versão anterios em projeto específico*****
+composer create-project --prefer-dist laravel/laravel nome-projeto "6.*"
+composer create-project laravel/laravel:^8.0 example-app
+
+===============================================================================================================
+
+						*****ERRO*****
+
+caso não esteja achando o controller, verificar a versão do laravel, pois na versão 8 tem que
+ir em App > Http > Providers > RouteServiceProvider.php e descomentar a linha
+//protected $namespace = 'App\\Http\\Controllers';
+
+========================================================================================================================
+
+> MIGRATIONS
+	*instaladores*
+> MODELS
+> ROTAS
+> CONTROLLER
+
+=========================================================================================================================
+
+alteração no .env : colocar os dados do mysql (schema)(nome do banco de dados)
+
+=========================================================================================================================
+
+(cria um servidor local da aplicação) (starta o servidor local) (ctrl + c: para o servidor):  >>> php artisan serve <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Lista de comandos do php artisan: >>> php artisan list <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Ver a versão do laravel: >>> php artisan --version <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Criando migration: >>> php artisan make:migration create_nomeDaTabela_table <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Criando migration com tabela já preenchida >>> php artisan make:migration create_table_nomeDaTabela --create=nomeDaTabela <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Rollback na migrate: >>> php artisan migrate:rollback <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Deletando todas as migrations: >>> php artisan migrate:fresh <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+criando Controller: >>> php artisan make:controller NomeController <<< (ex: ProtudosController)
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Rodando a migrate após criar a migration (criando tabela no banco): >>> php artisan migrate <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Ver status das migrations: >>> php artisan migrate:status <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+executando a migrate e zerando os dados do banco junto: >>> php artisan migrate:fresh <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Criando model: >>> php artisan make:model nomeDaModel <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Criando model e migration juntos: >>> php artisan make:model nomeDaModel -m <<<
+
+---------------------------------------------------------------------------------------------------------------------------
+
+ver a versão do composer: >>> composer <<<
+
+=============================================================================================================================
+
+@csrf: auxiliar de segurança da aplicação
+
+{id}: parâmetro obrigatório
+
+{id?}: parâmetro opcional
+
+- '/': rota raiz (localhost:8000)
+
+- :: acessando uma classe e utilizando um método estático, ou seja, estou acessando a classe 'Route' e acessando '::'
+o método estático 'get' (Route::get())
+
+Tipo de retorno para direcionar para outra página: return Redirect::route('admin.products'); || return redirect(route('...'));
+
+Adicionar na action do form no uso de imagens no formulário: enctype="multipart/form-data"
+
+ao dar erro no campo os dados preenchidos permanecem no campo nome: {{ old('name')}}: 
+
+=====================================================================================================================
+
+quando a action do formulário for method="PUT", devemos alterar o método para method="POST" e logo abaixo adicionar
+a diretiva 'method('PUT'), ou seja, forçar um método 'PUT' no formulário
+
+=====================================================================================================================
+
+no .env 'APP_DEBUG' se estiver true o usuario consegue ver os erros, caso esteja falso, o usário não consegue ver os erros
+
+=========================================================================================================================
+
+Ao baixar um projeto do github local na máquina e executar o 'php artisan serve' da erro na linha 18 referente ao autoload
+Executar os seguintes comandos abaixos para resolver.
+
+(composer dump-autoload) (composer install)
+
+============================================================================================================================
+
+					*** Usar interface 'ui' do laravel" ***
+	- Instalar o node js
+
+	- Depois executar o comando no terminal do projeto: >>> composer require laravel/ui <<<
+	
+	ou
+
+	para outras versões: >>> composer require laravel/ui:* <<<
+
+============================================================================================================================
+
+Cria template baseado no bootstrap e gera tela de login e cadastro automaticamente: >>> php artisan ui bootstrap --auth <<<
+
+============================================================================================================================
+
+		*** Instalar o node.js e depois de instalado, reiniciar o projeto do visual code ***
+
+***install node.js***
+
+node -v (versão do node no terminal)
+
+npm install (instala as dependências do node.js)
+
+npm run dev (compila as dependencias para que o front-end funcione (views))
+
+============================================================================================================================
+
+							*** Tipos de rotas ***
+
+- Route::get (usada para buscar informações, renderizar view)
+- Route::post (usada para salvar algo, ex: formulário)
+- Route::put (usada para poder editar algo, edição)
+- Route::patch (usada para poder editar algo, edição)
+- Route::delete (usada para deletar)
+- Route::options (usada para tipo de request tipo 'options')
+- Route::any (usada para utilizar todas as rotas ao mesmo tempo)
+
+===========================================================================================================================
+
+				*** Passando variável do back-end para o front-end ***
+
+>TeamsController<
+
+	public function index()
+	{
+		$nome = 'Lucas Yurie'; //passando variável do back-end para o front-end
+		return view('teams.index', ['nome' => $nome]); //nome da pasta . nome da view
+	}
+
+>index.blade.php<
+
+	@extends('layouts.app')
+
+	@section('content')
+
+    		<h1>Nome: {{ $nome }}</h1>
+
+	@endsection	
+
+==========================================================================================================================
+
+Por padrão, só temos o arquivo .env.example, então no momento que finaliza a instação é feito uma cópia desse arquivo com o nome .env
+
+Então basta copiar e renomear para .env
+
+Após fazer isso, rode um php artisan key:generatepara gerar a chave da aplicação no .env
+
+===========================================================================================================================
+
+							*** Erro de projeto ***
+
+- adicionar os comandos em app > providers > appServiceProvider.php
+	use Illuminate\Support\Facades\Schema;
+	
+	- na função boot(), adicionar o seguinte comando Schema::defaultStringLength(191);
+
+=============================================================================================================================
+
+							*** Arrumando Paginação ***
+
+erro: paginação desconfigurada do bootstrap.
+
+App > Htt p> Providers > AppServiceProvider > adicionar comando abaixo dentro do método boot()
+
+	>>> Paginator::useBootstrap(); <<<
+
+
+adicionar a referencia também: use Illuminate\Pagination\Paginator;
+
+============================================================================================================================
+
+tipo do botão 'submit', envia o form (type="submit")
+
+=============================================================================================================================
+
+							*** Prefixo de Rotas ***
+
+(prefixo de rotas, exemplo, deixando o prefixo da rota de 'times', logo todas as rotas deste prefixo terá no inicio o 'times')
+
+
+Route::prefix('times')->group(function (){
+
+    Route::get('', [TimesController::class, 'index'])->name('times-index');
+
+    Route::get('/create', [TimesController::class, 'create'])->name('times-create');
+
+});
+
+==============================================================================================================================
+
+							*** Tipos de rotas ***
+
+- Route::get (usada para buscar informações, renderizar view)
+- Route::post (usada para salvar algo, ex: formulário)
+- Route::put (usada para poder editar algo, edição)
+- Route::patch (usada para poder editar algo, edição)
+- Route::delete (usada para deletar)
+- Route::options (usada para tipo de request tipo 'options')
+- Route::any (usada para utilizar todas as rotas ao mesmo tempo)
+
+=============================================================================================================================
+
+							*** Layout padrão ***
+
+*layout.blade.php*
+	<!-- html content -->
+	
+	@yield('content')
+
+*Outras Views*
+	<!-- Extend layout -->
+	
+	@extends('layouts.layout')
+
+	@section('content')
+		<!-- conteúdo -->
+	@endsection
+
+============================================================================================================================
+
+					*** Adicionando bootstrap na projeto ***
+
+Baixar o bootstrap e colocar na pasta public (criar uma pasta chamada 'assets') e colocar dentro
+
+após, refenreciar essa pasta no template padrão (layout padrão)
+
+<link rel="stylesheet" href="{{ url('assets/bootstrap/css/bootstrap.min.css') }}">
+
+============================================================================================================================
+
+					*** Flash message para o usuario ***
+(controller)
+	return redirect('/')->with('msg', 'Evento criado com sucesso!');
+	// with: flash message para o usuário
+
+(view principal)
+	<main>
+            <div class="container-fluid">
+                <div class="row">
+
+                    @if (session('msg'))
+                        <p class="msg">{{ session('msg') }}</p>
+                    @endif
+
+                    @yield('content')
+
+                </div>
+            </div>
+        </main>
+
+(css)
+.msg {
+    	background-color: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+    padding: 10px;
+}
+
+============================================================================================================================
+
+*** Imagens ***
+
+<form action="/events" method="POST" enctype="multipart/form-data">
+            <!-- enctype="multipart/form-data": necessário para enviar arquivos por um formulário html-->
+</form>
+
+<div class="form-group">
+	<label for="image">Imagem do Evento:</label>
+	<input type="file" id="image" name="image" class="form-control-file">
+</div>
+
+
+
+(controller)
+
+    public function store(Request $request) //os dados do formulário vao vir do $request
+    {
+        $event = new Event;
+
+        $event->title = $request->title;
+        $event->city = $request->city;
+        $event->private = $request->private;
+        $event->description = $request->description;
+
+        // Image Upload
+        if ($request->hasFile('image') && $request->file('image')->isValid())
+        //verificando se é um arquivo de imagem
+        {
+            $requestImage = $request->image;
+
+            $extension = $requestImage->extension();
+
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+
+            //salvando imagem no servidor
+            $request->image->move(public_path('img/events'), $imageName);
+
+            $event->image = $imageName;
+        }
+
+
+
+
+adicionando campo na tabla de maneira incremental
+
+>>> php artisan make:migration add_image_to_events_table <<<
+
+
+
+(migration)
+
+    public function up()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            $table->string('image');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            
+            //removendo quando a imagem for deletada
+            $table->dropColumn('image');
+
+        });
+    }
+
+===========================================================================================================================
+
+findOrFail(): faz a verificação no banco se existe um registro com id tal, se não retorna um erro.
+
+===========================================================================================================================
+
+				*** Adicionando campo na tabela de maneira incremental ***
+
+>>> php artisan make:migration add_nomeDaColuna_to_nomeDaTabela_table <<<
+
+
+
+(migration)
+
+    public function up()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            $table->string('image');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            
+            //removendo quando a imagem for deletada
+            $table->dropColumn('image');
+
+        });
+    }
+
+
+depois de ter criado a migration executar o >>> php artisan migrate <<< para adicionar a coluna na tebal no banco de dados
+
+=============================================================================================================================
+
+							*** criando $casts ***
+
+- Dizendo que o campo é um 'array' e não 'sttring'
+- criar o 'casts' na model
+
+    protected $casts = [
+        'items' => 'array' //dizendo que o campo 'items' é um array e não string
+    ];
+
+=============================================================================================================================
+
+						*** Salvando JSON no banco de dados ***
+
+(view)
+
+            <div class="form-group">
+
+                <label for="title">Adicione itens de infraestrutura:</label>
+
+                <div class="form-group">
+                    <input type="checkbox" name="items[]" value="Cadeiras"> Cadeiras
+                    <!-- []: necesário para envio de array de itens -->
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" name="items[]" value="Palco"> Palco
+                    <!-- []: necesário para envio de array de itens -->
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" name="items[]" value="Cerveja grátis"> Cerveja grátis
+                    <!-- []: necesário para envio de array de itens -->
+                </div>
+	     </div>
+
+
+(migration)
+
+	>>> php artisan make:migration add_iems_to_events_table <<<
+
+
+
+    public function up()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            $table->string('image');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            
+            //removendo quando a imagem for deletada
+            $table->dropColumn('image');
+
+        });
+    }
+
+
+(controller)(evento store)
+
+        $event->items = $request->items; //este dado vem em array e não em string
+        //criado o casts no model ref. ao 'items'
+
+
+(model)
+
+    protected $casts = [
+        'items' => 'array' //dizendo que o campo 'items' é um array e não string
+    ];
+
+
+(na view show)
+
+                <h3>O evento conta com:</h3>
+
+                    <ul class="items-list">
+
+                        @foreach ($event->items as $item)
+
+                            <li><ion-icon name="play-outline"></ion-icon><span> {{ $item }}</span></li>
+
+                        @endforeach
+
+                    </ul>
+
+=============================================================================================================================
+
+						*** Instalando Jetstream ***
+
+Jetstream: para aplicar uma autenticação de modo rádido no nosso sistema.
+Liveware: componentes de autenticação para o blade.
+(login/registro)
+				
+
+>>> composer require laravel/jetstream <<< (versão atualizada)
+
+		ou
+
+>>> composer require laravel/jetstream "2.*" <<< (versão anterior)
+
+Removendo jetstream: >>> composer remove laravel/jetstream <<<
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+						*** Instalando Liveware ***
+
+>>> php artisan jetstream:install livewire <<< (livewire com 'i')
+
+npm install
+
+npm run dev
+
+=============================================================================================================================
+
+			*** Adicionando tela de autenticação do bootstrap no projeto (login/register) ***
+
+instalar node js no computador
+
+composer require laravel/ui:*
+
+php artisan ui bootstrap --auth
+
+npm install
+
+npm run dev
+
+=============================================================================================================================
+
+					*** Erro ao editar e salvar o formulário editado (update) ***
+
+(mensagem de erro no browser)
+
+Illuminate\Database\Eloquent\MassAssignmentException
+Add [_token] to fillable property to allow mass assignment on [App\Models\Event].
+http://127.0.0.1:8000/events/update/3
+
+(solução)
+
+na model, adicionar o seguinte atributo:
+protected $guarded = [];
+
+=============================================================================================================================
+
