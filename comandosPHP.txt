@@ -1,0 +1,131 @@
+composer create-project laravel/laravel crudJogadores2
+
+alteração .env
+
+criação banco de dados
+
+php artisan make:migration create_table_teams --create=teams
+
+php artisan migrate
+
+***install node.js***
+
+composer require laravel/ui
+
+php artisan ui bootstrap --auth (cria template baseado no bootstrap e gera tela de login e cadastro automaticamente)
+
+***Instalar o node.js e depois de instalado, reiniciar o projeto do visual code***
+
+node -v (versão do node no terminal)
+
+npm install (instala as dependências do node.js)
+
+npm run dev (compila as dependencias para que o front-end funcione (views))
+
+php artisan make:controller TeamsController
+
+php artisan make:model Team
+
+php artisan make:request StoreTeamsRequest
+
+php artisan make:request UpdateTeamsRequest
+
+PAGINAÇÃO
+
+FILTROS
+
+
+
+
+
+
+
+
+
+
+
+- MIGRATION
+	>instaladores
+- MODELS
+- ROTAS
+- CONTROLLER
+- VIEWS
+
+
+
+=========================================================================
+*layout.blade.php*
+	<!-- html content -->
+	
+	@yield('content')
+
+*Outras Views*
+	<!-- Extend layout -->
+	
+	@extends('layouts.layout')
+
+	@section('content')
+		<!-- conteúdo -->
+	@endsection
+=========================================================================================
+***tipos de rotas***
+
+- Route::get (usada para buscar informações, renderizar view)
+- Route::post (usada para salvar algo, ex: formulário)
+- Route::put (usada para poder editar algo, edição)
+- Route::patch (usada para poder editar algo, edição)
+- Route::delete (usada para deletar)
+- Route::options (usada para tipo de request tipo 'options')
+- Route::any (usada para utilizar todas as rotas ao mesmo tempo)
+===========================================================================================
+
+(prefixo de rotas, exemplo, deixando o prefixo da rota de 'teams', logo todas as rotas deste prefixo terá no inicio o 'teams')
+
+Route::prefix('teams')->group(function (){
+
+    Route::get('', [TeamsController::class, 'index'])->name('teams-index');
+
+    Route::get('/create', [TeamsController::class, 'create'])->name('teams-create');
+
+});
+
+==========================================================================================
+
+***Passando variável do back-end para o front-end***
+
+>TeamsController<
+
+	public function index()
+	{
+		$nome = 'Lucas Yurie'; //passando variável do back-end para o front-end
+		return view('teams.index', ['nome' => $nome]); //nome da pasta . nome da view
+	}
+
+>index.blade.php<
+
+	@extends('layouts.app')
+
+	@section('content')
+
+    		<h1>Nome: {{ $nome }}</h1>
+
+	@endsection	
+
+============================================================================================
+*Arrumando paginação*
+
+App>Http>Providers>AppServiceProvider> adicionar comando dentor do método boot()
+
+	Paginator::useBootstrap();
+
+	adicionar a referencia também: use Illuminate\Pagination\Paginator;
+
+==========================================================================================
+
+tipo do botão 'submit', envia o form
+
+=========================================================================================
+
+no . env > APP_DEBUG, true: mostra os erros, false: não mostra os erros
+
+=========================================================================================
